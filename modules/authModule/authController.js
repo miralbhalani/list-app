@@ -4,15 +4,15 @@ var tokenGen = require('../../lib/tokenGen');
 
 module.exports = function authController(depObject) {
     
+    // dependancies
     let { db } = depObject;
 
+    // post: /token
     async function getToken(req, res) {
 
         let { username, password } = req.body;
 
         password = hasher(password);
-
-
         try {
             const user = await db().collection('users').findOne({
                 user: username,
@@ -36,7 +36,7 @@ module.exports = function authController(depObject) {
         }
     }
 
-
+    // auth middleware
     async function validateToken(req, res, next) {
         const authHeader = req.headers.authorization;
 

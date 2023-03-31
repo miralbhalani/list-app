@@ -7,6 +7,8 @@ module.exports = function listController(depObject) {
     
     let { db } = depObject;
 
+    
+    // get: /list
     async function getLists(req, res) {
         
         const lists = await db().collection('lists').find().toArray();
@@ -14,6 +16,7 @@ module.exports = function listController(depObject) {
         res.json(lists)
     }
 
+    // post: /list
     async function createList(req, res) {
         
         try {
@@ -42,6 +45,7 @@ module.exports = function listController(depObject) {
         }
     }
 
+    // patch: /list/:id
     async function updateListTitle(req, res) {
         
         const id = new ObjectId(req.params.id);
@@ -59,6 +63,7 @@ module.exports = function listController(depObject) {
         }
     }
 
+    // delete: /list/:id
     async function deleteList(req, res) {
         
         const id = new ObjectId(req.params.id);
@@ -75,6 +80,7 @@ module.exports = function listController(depObject) {
         }
     }
 
+    // post: /list/:id/items
     async function addListItem(req, res) {
         
         const id = new ObjectId(req.params.id);
@@ -97,6 +103,7 @@ module.exports = function listController(depObject) {
         }
     }
 
+    // put: /list/:id/items/:itemId
     async function updateListItem(req, res, next) {
         
         const id = new ObjectId(req.params.id);
@@ -114,18 +121,17 @@ module.exports = function listController(depObject) {
                 status: true
             })
         } catch (error) {
-            // console.log(error)
             next(error);
         }
     }
 
+    // delete: /list/:id/items/:itemId
     async function deleteListItem(req, res, next) {
         
         const id = new ObjectId(req.params.id);
         const itemId = new ObjectId(req.params.itemId);
 
         try {
-            
             await db().collection('lists').updateOne({ _id: id}, { $pull: { items: { "id":  itemId} } });
             
             res.send({
