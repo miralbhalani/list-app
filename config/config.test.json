@@ -1,0 +1,17 @@
+{
+  "env": "test",
+  "db": {
+    "mongo": {
+      "uri": "mongodb://127.0.0.1:54336/",
+      "userName": "listappdbuser001",
+      "password": "TKD5jOZpcjy3kBap",
+      "dbName": "list-app"
+    }
+  },
+  "token": {
+    "jwt": {
+      "secret": "JIjekfikd412$#&9",
+      "expiresIn": "1h"
+    }
+  }
+}
