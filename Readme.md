@@ -1,11 +1,12 @@
 
-* RUN NPM INSTALL
-* RUN npm start <br/>
-OR
-* RUN npm run start:staging <br/>
-OR
-* RUN npm run start:production
+# Setup
+1. git clone https://github.com/miralbhalani/list-app.git
+2. cd list-app
+3. npm install
+4. copy the provided cofig.development.json to config folder (FOR SECURITY PURPOSES)
 
---------------
+# Run
+5. npm start
 
-* FOR TESTS: npm test
+# Test
+6. npm test
