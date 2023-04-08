@@ -22,21 +22,21 @@ module.exports = function listController(depObject) {
                 query = JSON.parse(req.query.q)    
             }catch(e) {
                 query = {
-                    title: query
+                    title: req.query.q
                 }
             }
         }
         
 
         // // SECURE CODE
-        // TEST: npm test -- --runInBand --no-cache --testPathPattern=injection.test.js
+        // // TEST: npm test -- --runInBand --no-cache --testPathPattern=injection.test.js
         // let query = {};
         // if(req.query.q) {
         //     query = {
         //         title: req.query.q
         //     }
         // }
-        
+
         console.log(query)
         const lists = await db().collection('lists').find({
             user: userInfo.id,
