@@ -1,0 +1,17 @@
+{
+    "env": "dev",
+    "db": {
+        "mongo": {
+            "uri": "mongodb+srv://list-app-cluster.i0jlv9d.mongodb.net/myFirstDatabase",
+            "userName": "listappdbuser001",
+            "password": "TKD5jOZpcjy3kBap",
+            "dbName": "list-app"
+        }
+    },
+    "token": {
+        "jwt": {
+            "secret": "JIjekfikd412$#&9",
+            "expiresIn": "1h"
+        }
+    }
+}

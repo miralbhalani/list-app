@@ -2,7 +2,7 @@
 var hasher = require('../../lib/hasher');
 var tokenGen = require('../../lib/tokenGen');
 
-module.exports = function authController(depObject) {
+module.exports = function authController(depObject, dependancyResolver) {
     
     // dependancies
     let { db } = depObject;
@@ -21,7 +21,8 @@ module.exports = function authController(depObject) {
             
             if(user) {
                 var token = tokenGen.generateToken({
-                    username
+                    username,
+                    id: user._id
                 })
     
                 res.json({
@@ -45,6 +46,12 @@ module.exports = function authController(depObject) {
 
             const validateResult = tokenGen.validateToken(token);
             if(validateResult) {
+
+                dependancyResolver.addDependancy("userInfo", {
+                    id: validateResult.id,
+                    username: validateResult.username
+                })
+
                 next()
                 return
             }

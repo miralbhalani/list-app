@@ -11,7 +11,37 @@ module.exports = function listController(depObject) {
     // get: /list
     async function getLists(req, res) {
         
-        const lists = await db().collection('lists').find().toArray();
+        let { userInfo } = depObject;
+        
+        // CODE WITH INJECTION INSECURITY
+        // {"user": {"$ne": ""}} search with
+        // TEST: npm test -- --runInBand --no-cache --testPathPattern=injection.test.js
+        let query = {}
+        if(req.query.q) {
+            try{
+                query = JSON.parse(req.query.q)    
+            }catch(e) {
+                query = {
+                    title: query
+                }
+            }
+        }
+        
+
+        // // SECURE CODE
+        // TEST: npm test -- --runInBand --no-cache --testPathPattern=injection.test.js
+        // let query = {};
+        // if(req.query.q) {
+        //     query = {
+        //         title: req.query.q
+        //     }
+        // }
+        
+        console.log(query)
+        const lists = await db().collection('lists').find({
+            user: userInfo.id,
+            ...query
+        }).toArray();
 
         res.json(lists)
     }
@@ -20,7 +50,13 @@ module.exports = function listController(depObject) {
     async function createList(req, res) {
         
         try {
-            var response = await db().collection('lists').insertOne(req.body);
+            
+            let { userInfo } = depObject
+            var isertObj = {
+                ...req.body,
+                user: userInfo.id
+            }
+            var response = await db().collection('lists').insertOne(isertObj);
             res.send({
                 status: true,
                 id: response.insertedId
@@ -52,7 +88,7 @@ module.exports = function listController(depObject) {
         const title = req.body.title;
 
         try {
-            
+
             await db().collection('lists').updateOne({ _id: id }, { $set: { title: title } });
             
             res.send({

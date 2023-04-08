@@ -2,7 +2,7 @@
   "env": "test",
   "db": {
     "mongo": {
-      "uri": "mongodb://127.0.0.1:59621/",
+      "uri": "mongodb://127.0.0.1:61064/",
       "userName": "listappdbuser001",
       "password": "TKD5jOZpcjy3kBap",
       "dbName": "list-app"
